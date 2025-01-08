@@ -7,6 +7,7 @@ pub fn process(colony: &mut Colony) {
         "state" | "colony" | "s" => colony.display_state(), 
         "next" | "n" => colony.next_day(),
         "help" => help(),
+        "quit" | "exit" => std::process::exit(0),
         _ => {println!("Type [help] to see the list of available commands.");}
     }
 }
