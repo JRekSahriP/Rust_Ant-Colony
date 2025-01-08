@@ -36,6 +36,7 @@ When a new ant is created, it consumes an amount of food **based on the total nu
 - If the defense is insufficient to counter the threat, the following may occur:  
   - **Loss of food**: The colony may lose 5 units of food.  
   - **Loss of tunnels**: One tunnel may be destroyed.  
+  - **Variable food loss**: A random percentage (between 5% and 90%) of the food stock to be lost.
 
 - If the defense is sufficient to counter the threat, the defense level will be reduced by the threat value.  
 

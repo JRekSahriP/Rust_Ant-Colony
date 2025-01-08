@@ -42,18 +42,32 @@ impl Colony {
         let add: u32 = (self.ants.len() + self.tunnels.borrow().len()) as u32; 
         let threat = utils::random_number(0, 1 + add);
         
-        if threat > *self.defense.borrow() {
-            if utils::random_number(0, 1) == 0 {
-                *self.food_stock.borrow_mut() -= 5;
-            } else if !self.tunnels.borrow().is_empty() {
-                self.tunnels.borrow_mut().remove(0);
+        let defended = threat <= *self.defense.borrow();
+
+        println!("Threat level: {}, Defense level: {}", threat, self.defense.borrow());
+
+        if !defended {
+            match utils::random_number(0, 2) {
+                0 => {
+                    *self.food_stock.borrow_mut() -= 5;
+                },
+                1 => {
+                    if !self.tunnels.borrow().is_empty() {
+                        self.tunnels.borrow_mut().remove(0);
+                    }
+                },
+                2 => {
+                    let percentage = utils::random_number(5, 90);
+                    let decrease_amount = (*self.food_stock.borrow() as f64 * (percentage as f64 / 100.0)).round() as i32;
+                    *self.food_stock.borrow_mut() -= decrease_amount;
+                },
+                _ => {},
             }
         } else {
             *self.defense.borrow_mut() -= threat;
         }
 
-        println!("Threat level: {}, Defense level: {}", threat, self.defense.borrow());
-        println!("{}", if threat > *self.defense.borrow() {"Threat exceeds defense, colony affected"} else {"Defense holds, no damage"});
+        println!("{}", if defended {"Defense holds, no damage"} else {"Threat exceeds defense, colony affected"});
     }
 
     fn consume_food(&self) {
