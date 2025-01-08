@@ -23,8 +23,7 @@ impl Ant {
             },
             Role::Builder => {
                 let mut tunnels_list = tunnels.borrow_mut();
-                let size = tunnels_list.len();
-                tunnels_list.push(format!("Tunnel {}", size + 1));
+                tunnels_list.push(format!("{}'s Tunnel", self.name));
             },
             Role::Guard => {
                 *defense.borrow_mut() += 1;
